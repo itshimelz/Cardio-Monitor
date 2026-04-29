@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from typing import Optional
+from typing import Literal, Optional, Union, List
 
 from backend_features import FEATURE_ORDER
 
@@ -103,7 +103,7 @@ def preprocess(encoded_features: dict[str, float]) -> int:
     return predict_with_metadata(encoded_features)["prediction"]
 
 
-def predict_with_metadata(encoded_features: dict[str, float]) -> dict[str, float | int]:
+def predict_with_metadata(encoded_features: dict[str, float]) -> dict[str, Union[float, int]]:
     _initialize_assets()
 
     if _model is None or _scaler is None:

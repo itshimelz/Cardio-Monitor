@@ -22,9 +22,19 @@ Flask API service for heart-disease risk prediction in the Cardio Monitor projec
 ## Requirements
 
 - Python 3.10+ recommended
-- `pip`
+- `pip` or `uv` (recommended for faster package management)
 
 ## Setup
+
+### Using `uv` (Recommended)
+
+From repository root:
+
+```bash
+uv sync
+```
+
+### Using standard `pip`
 
 From repository root:
 
@@ -35,6 +45,14 @@ pip install -r requirements.txt
 ```
 
 ## Run Backend
+
+Using `uv`:
+
+```bash
+uv run app.py
+```
+
+Using standard Python (with activated venv):
 
 ```bash
 python app.py
@@ -91,8 +109,3 @@ npm run dev
 Frontend URL:
 
 - `http://localhost:3000`
-
-## Credits
-
-Original project created by Sarvesh Kumar Sharma.  
-Backend-first API architecture maintained in this repository.

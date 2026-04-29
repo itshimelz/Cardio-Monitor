@@ -190,64 +190,6 @@ export function ResultView({
           </div>
         </section>
 
-        <section className="grid gap-4 border-b border-border/60 pb-8 md:grid-cols-3">
-          <div className="rounded-xl border border-border/70 bg-muted/10 p-4">
-            <p className="text-xs tracking-[0.16em] text-muted-foreground uppercase">
-              Risk probability
-            </p>
-            <p className="mt-2 text-3xl font-semibold">{probabilityPercent}%</p>
-            <p className="text-sm text-muted-foreground">
-              Model-estimated chance of low-risk class for this profile.
-            </p>
-          </div>
-          <div className="rounded-xl border border-border/70 bg-muted/10 p-4 md:col-span-2">
-            <p className="text-xs tracking-[0.16em] text-muted-foreground uppercase">
-              Confidence band
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {confidenceLowPercent}% - {confidenceHighPercent}%
-            </p>
-            <div className="mt-3 h-2 rounded-full bg-border">
-              <div
-                className={cn("h-2 rounded-full", isLowRisk ? "bg-primary" : "bg-destructive")}
-                style={{
-                  width: `${Math.max(1, confidenceHighPercent - confidenceLowPercent)}%`,
-                  marginLeft: `${Math.max(0, confidenceLowPercent)}%`,
-                }}
-              />
-            </div>
-          </div>
-        </section>
-
-        {redFlags.length > 0 ? (
-          <section className="space-y-3 border-b border-border/60 pb-8">
-            <h2 className="text-xl font-semibold tracking-tight">Red-Flag Signals</h2>
-            <ol className="space-y-2">
-              {redFlags.map((flag, index) => (
-                <li key={`${flag}-${index}`} className="text-sm leading-7 text-destructive">
-                  {index + 1}. {flag}
-                </li>
-              ))}
-            </ol>
-          </section>
-        ) : null}
-
-        {topContributors.length > 0 ? (
-          <section className="space-y-3 border-b border-border/60 pb-8">
-            <h2 className="text-xl font-semibold tracking-tight">Top Contributing Factors</h2>
-            <ol className="space-y-3">
-              {topContributors.map((item, index) => (
-                <li key={`${item.metric}-${index}`} className="border-b border-border/50 pb-3 last:border-b-0">
-                  <p className="text-sm font-semibold">
-                    {index + 1}. {item.label}
-                  </p>
-                  <p className="text-sm leading-7 text-muted-foreground">{item.note}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ) : null}
-
         <section className="grid gap-8 border-b border-border/60 pb-8 md:grid-cols-[auto_1fr] md:items-center">
           <RiskHeartSvg isLowRisk={isLowRisk} />
           <motion.div
@@ -441,6 +383,68 @@ export function ResultView({
             </div>
           </div>
         </section>
+
+        <section className="grid gap-4 border-b border-border/60 pb-8 md:grid-cols-3">
+          <div className="rounded-xl border border-border/70 bg-muted/10 p-4">
+            <p className="text-xs tracking-[0.16em] text-muted-foreground uppercase">
+              Risk probability
+            </p>
+            <p className="mt-2 text-3xl font-semibold">{probabilityPercent}%</p>
+            <p className="text-sm text-muted-foreground">
+              Model-estimated chance of low-risk class for this profile.
+            </p>
+          </div>
+          <div className="rounded-xl border border-border/70 bg-muted/10 p-4 md:col-span-2">
+            <p className="text-xs tracking-[0.16em] text-muted-foreground uppercase">
+              Confidence band
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {confidenceLowPercent}% - {confidenceHighPercent}%
+            </p>
+            <div className="mt-3 h-2 rounded-full bg-border">
+              <div
+                className={cn("h-2 rounded-full", isLowRisk ? "bg-primary" : "bg-destructive")}
+                style={{
+                  width: `${Math.max(1, confidenceHighPercent - confidenceLowPercent)}%`,
+                  marginLeft: `${Math.max(0, confidenceLowPercent)}%`,
+                }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {(redFlags.length > 0 || topContributors.length > 0) && (
+          <section className="grid gap-8 border-b border-border/60 pb-8 md:grid-cols-2">
+            {redFlags.length > 0 && (
+              <div className="space-y-3">
+                <h2 className="text-xl font-semibold tracking-tight">Red-Flag Signals</h2>
+                <ol className="space-y-2">
+                  {redFlags.map((flag, index) => (
+                    <li key={`${flag}-${index}`} className="text-sm leading-7 text-destructive">
+                      {index + 1}. {flag}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {topContributors.length > 0 && (
+              <div className="space-y-3">
+                <h2 className="text-xl font-semibold tracking-tight">Top Contributing Factors</h2>
+                <ol className="space-y-3">
+                  {topContributors.map((item, index) => (
+                    <li key={`${item.metric}-${index}`} className="border-b border-border/50 pb-3 last:border-b-0">
+                      <p className="text-sm font-semibold">
+                        {index + 1}. {item.label}
+                      </p>
+                      <p className="text-sm leading-7 text-muted-foreground">{item.note}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+          </section>
+        )}
 
         <section className="space-y-3 border-b border-border/60 pb-8">
           <h2 className="text-xl font-semibold tracking-tight">Suggested Next Steps</h2>
